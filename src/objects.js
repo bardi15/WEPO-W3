@@ -1,11 +1,3 @@
-class Mouse {
-  xpos() {
-    return event.clientX;
-  }
-  ypos() {
-    return event.clientY;
-  }
-}
 
 class Shape {
   constructor(x, y, radius, color) {
@@ -14,10 +6,20 @@ class Shape {
     this.radius = radius
     this.color=color;
   }
-  draw(_x,_y) {
-    var c = document.getElementById("canvas");
-    var ctx = c.getContext("2d");
-    ctx.fillStyle="#FF0000";
-    ctx.fillRect(_x,_y,150,100);
+  draw() {
+  //  var c = document.getElementById("canvas");
+  //  var ctx = c.getContext("2d");
+  //  ctx.fillStyle="#FF0000";
+  //  ctx.fillRect(_x,_y,150,100);
+  }
+}
+
+class Rectangle extends Shape {
+  draw()
+  {
+      var c = document.getElementById("canvas");
+      var ctx = c.getContext("2d");
+      ctx.fillStyle="#FF0000";
+      ctx.fillRect(this.x,this.y,150,100);
   }
 }
