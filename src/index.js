@@ -17,7 +17,13 @@ $( document ).ready(function() {
     var y = event.pageY - this.offsetTop;
 
     if (settings.nextObject === "Rectangle") {
-      shape = new Rectangle(x,y,10);
+      shape = new Rectangle(x,y,settings.nextColor);
+    }
+    else if (settings.nextObject === "Circle") {
+      shape = new Circle(x,y,settings.nextColor);
+    }
+    else if (settings.nextObject === "Line") {
+      shape = new Circle(x,y,settings.nextColor);
     }
 
     settings.currentShape = shape;
@@ -70,5 +76,23 @@ $( document ).ready(function() {
     selectObject(x,y);
 
   });
+
+  function displayVals() {
+    var value = $( "#shapeselect" ).val();
+    //$("p").html( "<b>Single:</b> " + singleValues);
+    if (value === "Rectangle"){
+      settings.nextObject = "Rectangle"
+    }
+    else if (value === "Circle"){
+      settings.nextObject = "Circle"
+    }
+    else {
+      settings.nextObject = "Line"
+    }
+  }
+
+  $("#shapeselect").change(displayVals);
+  displayVals();
+
 
 });

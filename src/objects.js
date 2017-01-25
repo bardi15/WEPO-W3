@@ -37,6 +37,27 @@ class Rectangle extends Shape {
   }
 }
 
+class Circle extends Shape {
+  constructor(x, y, color) {
+    super(x,y,color);
+  }
+
+  draw(context) {
+    //console.log(context);
+    //context.fillStyle = this.color;
+    //context.fillRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
+    console.log("Drawing cirlce");
+    context.beginPath();
+    context.arc(this.x, this.y, this.endX - this.x, this.endY - this.y, 0, 2* Math.PI);
+    context.stroke();
+  /*  if (this.selected) {
+      context.strokeStyle = "#0000ff";
+      context.lineWidth   = 5;
+      context.strokeRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
+    }*/
+  }
+}
+
 var settings = {
   canvasObj: document.getElementById("drawboard"),
   nextObject: "Rectangle",
@@ -55,8 +76,6 @@ function drawCurrent() {
 function drawAll() {
   clear()
   var context = settings.canvasObj.getContext("2d");
-
-  //console.log(settings.shapes.length);
   settings.shapes.forEach(function(obj){
     obj.draw(context);
   });
@@ -68,8 +87,7 @@ function clear() {
 }
 
 function selectObject(cursorX,cursorY) {
-
-  settings.shapes.forEach(function(obj){
+  settings.shapes.forEach(function(obj) {
     var x1 = obj.x;
     var y1 = obj.y;
     var x2 = obj.endX;
@@ -85,7 +103,6 @@ function selectObject(cursorX,cursorY) {
     else {
       console.log("FALSE");
     }
-
     console.log(obj);
   });
 }
@@ -95,8 +112,6 @@ function unSelectAll() {
     obj.selected = false;
   });
 }
-
-
 
 /*
 $( "#drawboard" ).mousedown(function(e) {
