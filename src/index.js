@@ -25,6 +25,9 @@ $( document ).ready(function() {
     else if (settings.nextObject === "Line") {
       shape = new Line(x,y,settings.nextColor);
     }
+    else if (settings.nextObject === "Text") {
+      shape = new Text(x,y,settings.nextColor);
+    }
     settings.currentShape = shape;
   });
 
@@ -128,8 +131,14 @@ $( document ).ready(function() {
     }
     else {
       $("#redo").addClass("greyout")
-
     }
   });
 
+  function textVals() {
+    var value = $( "#textWrite" ).val();
+    settings.currentText = value;
+  }
+
+  $("#textWrite").change(textVals);
+  textVals();
 });

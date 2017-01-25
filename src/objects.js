@@ -7,6 +7,7 @@ class Shape {
     this.endY = y;
     this.color = settings.nextColor;
     this.selected=false;
+    this.currentText="";
   }
   setEnd(x,y) {
     this.endX = x;
@@ -66,11 +67,25 @@ class Line extends Shape {
   }
 }
 
+class Text extends Shape {
+  constructor(x, y, color) {
+    super(x,y,color);
+    console.log(context.currentText);
+    this.currentText = settings.currentText;
+  }
+
+  draw(context) {
+    context.font = "30px Arial";
+    context.fillText(this.currentText,this.x, this.y);
+  }
+}
+
 var settings = {
   canvasObj: document.getElementById("drawboard"),
   nextObject: "Rectangle",
   nextColor: "red",
   currentShape: undefined,
+  currentText: "",
   shapes: [],
   redoShapes: [],
   isDrawing: false

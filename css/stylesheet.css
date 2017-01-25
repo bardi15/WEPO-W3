@@ -38,6 +38,11 @@
   cursor: default;
 }
 
+input:focus::-webkit-input-placeholder
+{
+    color: transparent;
+}
+
 .BlackText{ background-color:black; color:white;  }
 .RedText{ background-color:red; }
 .YellowText{ background-color:yellow; }
