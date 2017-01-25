@@ -70,13 +70,17 @@ class Line extends Shape {
 class Text extends Shape {
   constructor(x, y, color) {
     super(x,y,color);
-    console.log(context.currentText);
+
     this.currentText = settings.currentText;
+    //this.color = this.nextColor;
+    console.log("hi " + this.currentText);
   }
 
   draw(context) {
     context.font = "30px Arial";
+    context.fillStyle = this.color;
     context.fillText(this.currentText,this.x, this.y);
+
   }
 }
 

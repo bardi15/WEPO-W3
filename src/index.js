@@ -74,22 +74,11 @@ $( document ).ready(function() {
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
     selectObject(x,y);
-
   });
 
   function displayVals() {
     var value = $( "#shapeselect" ).val();
     settings.nextObject = value;
-    //$("p").html( "<b>Single:</b> " + singleValues);
-/*    if (value === "Rectangle"){
-      settings.nextObject = "Rectangle"
-    }
-    else if (value === "Circle"){
-      settings.nextObject = "Circle"
-    }
-    else {
-      settings.nextObject = "Line"
-    }*/
   }
 
   $("#shapeselect").change(displayVals);
@@ -98,19 +87,10 @@ $( document ).ready(function() {
   function colorVals() {
     var value = $( "#colorselect" ).val();
     settings.nextColor = value;
-/*    if (value === "Black"){
-      settings.nextColor = "black";
-    }
-    else if (value === "Red"){
-      settings.nextColor = "red"
-    }
-    else {
-      settings.nextObject = "Line"
-    }*/
   }
 
   $("#colorselect").change(colorVals);
-  colorVals();
+  //colorVals();
 
   $( "#undo" ).click(function() {
     if (settings.shapes.length > 0) {
