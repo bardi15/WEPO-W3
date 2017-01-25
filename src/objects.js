@@ -5,7 +5,7 @@ class Shape {
     this.y = y;
     this.endX = x;
     this.endY = y;
-    this.color=color;
+    this.color = settings.nextColor;
     this.selected=false;
   }
   setEnd(x,y) {
@@ -23,6 +23,7 @@ class Shape {
 class Rectangle extends Shape {
   constructor(x, y, color) {
     super(x,y,color);
+    //this.color = settings.nextColor;
   }
 
   draw(context) {
@@ -30,7 +31,7 @@ class Rectangle extends Shape {
     context.fillStyle = this.color;
     context.fillRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
     if (this.selected) {
-      context.strokeStyle = "#0000ff";
+      context.strokeStyle = red;
       context.lineWidth   = 5;
       context.strokeRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
     }
@@ -45,6 +46,8 @@ class Circle extends Shape {
   draw(context) {
     context.beginPath();
     context.arc(this.x, this.y, this.endX - this.x, this.endY - this.y, 0, 2* Math.PI);
+    context.fillStyle = this.color;
+    context.fill();
     context.stroke();
   }
 }
@@ -58,6 +61,7 @@ class Line extends Shape {
     context.beginPath();
     context.moveTo(this.x, this.y);
     context.lineTo(this.endX,this.endY);
+    context.strokeStyle = this.color;
     context.stroke();
   }
 }
@@ -116,36 +120,3 @@ function unSelectAll() {
     obj.selected = false;
   });
 }
-
-/*
-$( "#drawboard" ).mousedown(function(e) {
-  console.log("mousedown");
-  var shape = undefined;
-  var context = settings.canvasObj.getContext("2d");
-
-  if (settings.nextObject === "Rectangle") {
-    shape = new Rectangle(10,10,10);
-  }
-
-  settings.currentShape = shape;
-  settings.shapes.push(shape);
-
-});
-
-$( "#drawboard" ).mouseup(function(e) {
-  isDrawing = false;
-  console.log(e);
-
-});
-$( "#drawboard" ).mousemove(function(e) {
-  if (settings.currentShape !== undefined) {
-    settings.currentShape.set
-  }
-});
-
-function drawAll() {
-  var context = settings.canvasObj.getContext("2d");
-  //Todo clear canvasOb
-  //todo draw
-}
-*/

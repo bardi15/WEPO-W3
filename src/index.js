@@ -8,7 +8,7 @@ $( document ).ready(function() {
 
   $( "#drawboard" ).dblclick(function(e) {
     unSelectAll();
-    console.log("mousedown");
+    //console.log("mousedown");
     settings.isDrawing = true;
     var shape = undefined;
     var context = settings.canvasObj.getContext("2d");
@@ -25,10 +25,7 @@ $( document ).ready(function() {
     else if (settings.nextObject === "Line") {
       shape = new Line(x,y,settings.nextColor);
     }
-
     settings.currentShape = shape;
-
-
   });
 
   $( "#drawboard" ).mouseup(function(e) {
@@ -43,14 +40,15 @@ $( document ).ready(function() {
   });
   $( "#drawboard" ).mousemove(function(e) {
     //console.log("mousemove");
+    console.log(settings.nextColor);
     var currShape = settings.currentShape;
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
     if(currShape != undefined && currShape.selected){
-      console.log("selected");
+      //console.log("selected");
       var currWidth = currShape.endX - currShape.x;
       var currHeight = currShape.endY - currShape.y;
-      console.log(currWidth, currHeight);
+      //console.log(currWidth, currHeight);
       currShape.x = x;
       currShape.y = y;
       currShape.endX = currWidth + x;
@@ -64,7 +62,6 @@ $( document ).ready(function() {
         drawCurrent();
       }
       var k = currShape;
-      //console.log(k.x,k.y,k.endX,k.endY);
     }
 
   });
@@ -79,8 +76,9 @@ $( document ).ready(function() {
 
   function displayVals() {
     var value = $( "#shapeselect" ).val();
+    settings.nextObject = value;
     //$("p").html( "<b>Single:</b> " + singleValues);
-    if (value === "Rectangle"){
+/*    if (value === "Rectangle"){
       settings.nextObject = "Rectangle"
     }
     else if (value === "Circle"){
@@ -88,11 +86,28 @@ $( document ).ready(function() {
     }
     else {
       settings.nextObject = "Line"
-    }
+    }*/
   }
 
   $("#shapeselect").change(displayVals);
   displayVals();
+
+  function colorVals() {
+    var value = $( "#colorselect" ).val();
+    settings.nextColor = value;
+/*    if (value === "Black"){
+      settings.nextColor = "black";
+    }
+    else if (value === "Red"){
+      settings.nextColor = "red"
+    }
+    else {
+      settings.nextObject = "Line"
+    }*/
+  }
+
+  $("#colorselect").change(colorVals);
+  colorVals();
 
 
 });

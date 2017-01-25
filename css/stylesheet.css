@@ -37,3 +37,12 @@
   /*pointer-events: none;*/
   cursor: default;
 }
+
+.BlackText{ background-color:black; color:white;  }
+.RedText{ background-color:red; }
+.YellowText{ background-color:yellow; }
+.BlueText{ background-color:blue; }
+.GreenText{ background-color:green; }
+.OrangeText{ background-color:orange; }
+.PurpleText{ background-color:purple; }
+.WhiteText{ background-color:white; }
