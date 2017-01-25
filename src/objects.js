@@ -43,18 +43,22 @@ class Circle extends Shape {
   }
 
   draw(context) {
-    //console.log(context);
-    //context.fillStyle = this.color;
-    //context.fillRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
-    console.log("Drawing cirlce");
     context.beginPath();
     context.arc(this.x, this.y, this.endX - this.x, this.endY - this.y, 0, 2* Math.PI);
     context.stroke();
-  /*  if (this.selected) {
-      context.strokeStyle = "#0000ff";
-      context.lineWidth   = 5;
-      context.strokeRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
-    }*/
+  }
+}
+
+class Line extends Shape {
+  constructor(x, y, color) {
+    super(x,y,color);
+  }
+
+  draw(context) {
+    context.beginPath();
+    context.moveTo(this.x, this.y);
+    context.lineTo(this.endX,this.endY);
+    context.stroke();
   }
 }
 

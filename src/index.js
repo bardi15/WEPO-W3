@@ -23,7 +23,7 @@ $( document ).ready(function() {
       shape = new Circle(x,y,settings.nextColor);
     }
     else if (settings.nextObject === "Line") {
-      shape = new Circle(x,y,settings.nextColor);
+      shape = new Line(x,y,settings.nextColor);
     }
 
     settings.currentShape = shape;
