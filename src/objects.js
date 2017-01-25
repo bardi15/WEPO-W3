@@ -6,6 +6,7 @@ class Shape {
     this.endX = x;
     this.endY = y;
     this.color=color;
+    this.selected=false;
   }
   setEnd(x,y) {
     this.endX = x;
@@ -28,6 +29,11 @@ class Rectangle extends Shape {
     //console.log(context);
     context.fillStyle = this.color;
     context.fillRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
+    if (this.selected) {
+      context.strokeStyle = "#0000ff";
+      context.lineWidth   = 5;
+      context.strokeRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
+    }
   }
 }
 
@@ -42,7 +48,7 @@ var settings = {
 
 function drawCurrent() {
   var context = settings.canvasObj.getContext("2d");
-  clear()
+  //clear()
   settings.currentShape.draw(context);
 }
 
@@ -51,15 +57,46 @@ function drawAll() {
   var context = settings.canvasObj.getContext("2d");
 
   //console.log(settings.shapes.length);
-  settings.shapes.forEach(function(word){
-    word.draw(context);
+  settings.shapes.forEach(function(obj){
+    obj.draw(context);
   });
 }
 
 function clear() {
   var context = settings.canvasObj.getContext("2d");
-  context.clearRect(0,0,500,500);
+  context.clearRect(0,0,800,600);
 }
+
+function selectObject(cursorX,cursorY) {
+
+  settings.shapes.forEach(function(obj){
+    var x1 = obj.x;
+    var y1 = obj.y;
+    var x2 = obj.endX;
+    var y2 = obj.endY;
+    console.log("x1: " + x1 + " y1: " + y1 + " x2:" + x2 + " y2: " + y2 + " cX: " + cursorX + " cY: " + cursorY);
+    if ((x1 <= cursorX && x2 >= cursorX) &&
+      ((y1 <= cursorY && y2 >= cursorY))) {
+        console.log("TRUE");
+        obj.selected = true;
+        settings.currShape = obj;
+        return;
+      }
+    else {
+      console.log("FALSE");
+    }
+
+    console.log(obj);
+  });
+}
+
+function unSelectAll() {
+  settings.shapes.forEach(function(obj){
+    obj.selected = false;
+  });
+}
+
+
 
 /*
 $( "#drawboard" ).mousedown(function(e) {

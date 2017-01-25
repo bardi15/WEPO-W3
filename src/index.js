@@ -6,7 +6,8 @@ $( document ).ready(function() {
   var xStart = 0;
   var yStart = 0;
 
-  $( "#drawboard" ).mousedown(function(e) {
+  $( "#drawboard" ).dblclick(function(e) {
+    unSelectAll();
     console.log("mousedown");
     settings.isDrawing = true;
     var shape = undefined;
@@ -26,28 +27,47 @@ $( document ).ready(function() {
 
   $( "#drawboard" ).mouseup(function(e) {
     //console.log("mouseup");
+    unSelectAll();
+    if (settings.isDrawing) {
+      settings.shapes.push(settings.currentShape);
+    }
     settings.isDrawing = false;
-    settings.shapes.push(settings.currentShape);
     drawAll();
 
   });
   $( "#drawboard" ).mousemove(function(e) {
     //console.log("mousemove");
+    var currShape = settings.currentShape;
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
-    if (settings.isDrawing) {
-      settings.currentShape.setEnd(x,y);
-      drawCurrent();
+    if(currShape != undefined && currShape.selected){
+      console.log("selected");
+      var currWidth = currShape.endX - currShape.x;
+      var currHeight = currShape.endY - currShape.y;
+      console.log(currWidth, currHeight);
+      currShape.x = x;
+      currShape.y = y;
+      currShape.endX = currWidth + x;
+      currShape.endY = currHeight + y;
+
+      drawAll();
     }
-    var k = settings.currentShape;
-    //console.log(k.x,k.y,k.endX,k.endY);
+    else {
+      if (settings.isDrawing) {
+        currShape.setEnd(x,y);
+        drawCurrent();
+      }
+      var k = currShape;
+      //console.log(k.x,k.y,k.endX,k.endY);
+    }
+
   });
 
-  $( "#drawboard" ).dblclick(function(e) {
-    var k = settings.currentShape;
-
-    console.log(k.x,k.y,k.endX,k.endY);
-
+  $( "#drawboard" ).mousedown(function(e) {
+    unSelectAll();
+    var x = event.pageX - this.offsetLeft;
+    var y = event.pageY - this.offsetTop;
+    selectObject(x,y);
 
   });
 
