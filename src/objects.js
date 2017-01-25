@@ -72,6 +72,7 @@ var settings = {
   nextColor: "red",
   currentShape: undefined,
   shapes: [],
+  redoShapes: [],
   isDrawing: false
 };
 

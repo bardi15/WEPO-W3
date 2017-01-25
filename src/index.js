@@ -109,5 +109,27 @@ $( document ).ready(function() {
   $("#colorselect").change(colorVals);
   colorVals();
 
+  $( "#undo" ).click(function() {
+    if (settings.shapes.length > 0) {
+      $("#redo").removeClass("greyout")
+      settings.redoShapes.push(settings.shapes.pop());
+      drawAll();
+    }
+    else {
+      $("#undo").addClass("greyout")
+
+    }
+  });
+  $( "#redo" ).click(function() {
+    if (settings.redoShapes.length > 0) {
+      $("#undo").removeClass("greyout")
+      settings.shapes.push(settings.redoShapes.pop());
+      drawAll();
+    }
+    else {
+      $("#redo").addClass("greyout")
+
+    }
+  });
 
 });
