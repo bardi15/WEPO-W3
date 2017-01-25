@@ -1,37 +1,54 @@
+tmpList = [];
+
 $( document ).ready(function() {
-  var down = false;
-  var listOfObjects = [];
-    console.log( "ready!" );
+  var canvas = document.getElementById("drawboard");
+  var context = canvas.getContext("2d");
+  var xStart = 0;
+  var yStart = 0;
+
+  $( "#drawboard" ).mousedown(function(e) {
+    console.log("mousedown");
+    settings.isDrawing = true;
+    var shape = undefined;
+    var context = settings.canvasObj.getContext("2d");
+
+    var x = event.pageX - this.offsetLeft;
+    var y = event.pageY - this.offsetTop;
+
+    if (settings.nextObject === "Rectangle") {
+      shape = new Rectangle(x,y,10);
+    }
+
+    settings.currentShape = shape;
 
 
+  });
 
-    $( "#canvas" ).click(function() {
-      listOfObjects.forEach(function(word){
-        word.draw();
-        console.log(listOfObjects.length );
-      })
-    });
-    $( "#canvas" ).mousedown(function() {
-      down = true;
-    });
-    $( "#canvas" ).mouseup(function() {
+  $( "#drawboard" ).mouseup(function(e) {
+    //console.log("mouseup");
+    settings.isDrawing = false;
+    settings.shapes.push(settings.currentShape);
+    drawAll();
 
-      down = false;
-    });
-    $( "#canvas" ).mousemove(function(event) {
-      if (down){
-        var x = event.pageX - this.offsetLeft;
-        var y = event.pageY - this.offsetTop;
+  });
+  $( "#drawboard" ).mousemove(function(e) {
+    //console.log("mousemove");
+    var x = event.pageX - this.offsetLeft;
+    var y = event.pageY - this.offsetTop;
+    if (settings.isDrawing) {
+      settings.currentShape.setEnd(x,y);
+      drawCurrent();
+    }
+    var k = settings.currentShape;
+    //console.log(k.x,k.y,k.endX,k.endY);
+  });
 
-        //console.log("should draw...");
-        var rect = new Rectangle(x,y,0,0)
-        listOfObjects.push(rect);
-        //square.draw(x,y);
-        console.log(x, y);
+  $( "#drawboard" ).dblclick(function(e) {
+    var k = settings.currentShape;
+
+    console.log(k.x,k.y,k.endX,k.endY);
 
 
-    }});
-    $( "#undo" ).click(function() {
-      listOfObjects.pop();
-    });
+  });
+
 });
