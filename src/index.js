@@ -6,75 +6,84 @@ $( document ).ready(function() {
   var xStart = 0;
   var yStart = 0;
 
-  $( "#drawboard" ).dblclick(function(e) {
-    unSelectAll();
-    //console.log("mousedown");
-    settings.isDrawing = true;
-    var shape = undefined;
-    var context = settings.canvasObj.getContext("2d");
 
+
+  $( "#drawboard" ).mousedown(function(e) {
+    unSelectAll();
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
 
-    if (settings.nextObject === "Rectangle") {
-      shape = new Rectangle(x,y,settings.nextColor);
+    if (selectObject(x,y)) {
+      console.log("object is here...");
+      settings.selected = true;
     }
-    else if (settings.nextObject === "Circle") {
-      shape = new Circle(x,y,settings.nextColor);
+    else {
+      settings.isDrawing = true;
+      settings.selected = false;
+      var shape = undefined;
+      var context = settings.canvasObj.getContext("2d");
+
+      //context.moveTo(x,y);
+      if (settings.nextObject === "Rectangle") {
+        shape = new Rectangle(x,y,settings.nextColor);
+      }
+      else if (settings.nextObject === "Circle") {
+        shape = new Circle(x,y,settings.nextColor);
+      }
+      else if (settings.nextObject === "Line") {
+        shape = new Line(x,y,settings.nextColor);
+      }
+      else if (settings.nextObject === "Text") {
+        shape = new Text(x,y,settings.nextColor);
+        settings.shapes.push(shape);
+      }
+      else if (settings.nextObject === "Pen") {
+        //console.log("in nxt: ", x,y);
+        shape = new Pen(x,y,settings.nextColor);
+      }
+      settings.currentShape = shape;
     }
-    else if (settings.nextObject === "Line") {
-      shape = new Line(x,y,settings.nextColor);
-    }
-    else if (settings.nextObject === "Text") {
-      shape = new Text(x,y,settings.nextColor);
-    }
-    settings.currentShape = shape;
+
   });
 
   $( "#drawboard" ).mouseup(function(e) {
-    //console.log("mouseup");
     unSelectAll();
-    if (settings.isDrawing) {
+    if (settings.isDrawing && !settings.selected) {
+      console.log("pushed");
       settings.shapes.push(settings.currentShape);
     }
     settings.isDrawing = false;
+    settings.selected = false;
     drawAll();
 
   });
   $( "#drawboard" ).mousemove(function(e) {
-    //console.log("mousemove");
-    console.log(settings.nextColor);
+    //console.log(settings.nextColor);
     var currShape = settings.currentShape;
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
-    if(currShape != undefined && currShape.selected){
-      //console.log("selected");
-      var currWidth = currShape.endX - currShape.x;
-      var currHeight = currShape.endY - currShape.y;
-      //console.log(currWidth, currHeight);
-      currShape.x = x;
-      currShape.y = y;
-      currShape.endX = currWidth + x;
-      currShape.endY = currHeight + y;
-
-      drawAll();
+    //if(currShape != undefined && currShape.selected){
+    if (currShape != undefined && settings.selected){
+      //console.log("moving object..");
+      moveObject(currShape,x,y);
+      drawCurrent();
     }
     else {
       if (settings.isDrawing) {
         currShape.setEnd(x,y);
         drawCurrent();
       }
-      var k = currShape;
     }
-
   });
 
-  $( "#drawboard" ).mousedown(function(e) {
+/*  $( "#drawboard" ).dblclick(function(e) {
     unSelectAll();
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
+    settings.selected = true;
+    //console.log("actual click: " + x + " , "+ y);
     selectObject(x,y);
-  });
+  });*/
 
   function displayVals() {
     var value = $( "#shapeselect" ).val();
@@ -90,7 +99,6 @@ $( document ).ready(function() {
   }
 
   $("#colorselect").change(colorVals);
-  //colorVals();
 
   $( "#undo" ).click(function() {
     if (settings.shapes.length > 0) {
@@ -100,7 +108,6 @@ $( document ).ready(function() {
     }
     else {
       $("#undo").addClass("greyout")
-
     }
   });
   $( "#redo" ).click(function() {
