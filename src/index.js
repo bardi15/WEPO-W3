@@ -1,27 +1,31 @@
-tmpList = [];
-
 $( document ).ready(function() {
   var canvas = document.getElementById("drawboard");
   var context = canvas.getContext("2d");
   var xStart = 0;
   var yStart = 0;
 
-
-
   $( "#drawboard" ).mousedown(function(e) {
-    unSelectAll();
+    //unSelectAll();
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
+    //return object if it is under the mouse
+    var selectObj = selectObject(x,y);
 
-    if (selectObject(x,y)) {
+    //if object is under the mouse, it is selected, instead of
+    //trying to make a new object in that space
+    if (selectObj != undefined) {
       console.log("object is here...");
       settings.selected = true;
+      settings.currentShape = selectObj;
+      console.log(settings.currentShape.color);
+      $( "#colorselect" ).val(settings.currentShape.color);
     }
+    //no object under mouse, new one is to be created.
     else {
       settings.isDrawing = true;
-      settings.selected = false;
+      //settings.selected = false;
       var shape = undefined;
-      var context = settings.canvasObj.getContext("2d");
+      //var context = settings.canvasObj.getContext("2d");
 
       //context.moveTo(x,y);
       if (settings.nextObject === "Rectangle") {
@@ -33,23 +37,29 @@ $( document ).ready(function() {
       else if (settings.nextObject === "Line") {
         shape = new Line(x,y,settings.nextColor);
       }
+      //text needs to be pushed immediatly as it is created only
+      //by one mousedown, and it not resized by mouse movements
       else if (settings.nextObject === "Text") {
         shape = new Text(x,y,settings.nextColor);
-        settings.shapes.push(shape);
+        //settings.shapes.push(shape);
       }
       else if (settings.nextObject === "Pen") {
         //console.log("in nxt: ", x,y);
         shape = new Pen(x,y,settings.nextColor);
       }
+
+      //current shape is stored as reference in settings for
+      //later use
       settings.currentShape = shape;
     }
 
   });
 
   $( "#drawboard" ).mouseup(function(e) {
-    unSelectAll();
+    //items are only pushed to the shapes list if it is not selected
+    //for movement.
     if (settings.isDrawing && !settings.selected) {
-      console.log("pushed");
+      //console.log("pushed");
       settings.shapes.push(settings.currentShape);
     }
     settings.isDrawing = false;
@@ -76,15 +86,6 @@ $( document ).ready(function() {
     }
   });
 
-/*  $( "#drawboard" ).dblclick(function(e) {
-    unSelectAll();
-    var x = event.pageX - this.offsetLeft;
-    var y = event.pageY - this.offsetTop;
-    settings.selected = true;
-    //console.log("actual click: " + x + " , "+ y);
-    selectObject(x,y);
-  });*/
-
   function displayVals() {
     var value = $( "#shapeselect" ).val();
     settings.nextObject = value;
@@ -95,7 +96,15 @@ $( document ).ready(function() {
 
   function colorVals() {
     var value = $( "#colorselect" ).val();
+    console.log(settings);
     settings.nextColor = value;
+    //settings.currentShape.color = value;
+    if(settings.selected == true) {
+      console.log("changes to color.....");
+      //settings.currentShape.color = value;
+      drawCurrent();
+    }
+    console.log("touch");
   }
 
   $("#colorselect").change(colorVals);
@@ -128,4 +137,21 @@ $( document ).ready(function() {
 
   $("#textWrite").change(textVals);
   textVals();
+
+  function fontVals() {
+    var value = $( "#fontSize" ).val();
+    settings.fontSize = value;
+  }
+
+  $("#fontSize").change(fontVals);
+  fontVals();
+
+  function thicknessVals() {
+    var value = $( "#lineThickness" ).val();
+    settings.lineWidth = value;
+  }
+
+  $("#lineThickness").change(thicknessVals);
+  thicknessVals();  
+
 });

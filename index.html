@@ -2,43 +2,79 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>PhotoChop</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/stylesheet.css">
   </head>
 
   <body>
-    <canvas id="drawboard" width="640" height="480"></canvas>
+    <canvas id="drawboard" width="640" height="480" class="canvas"></canvas>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="src/objects.js"></script>
+    <script type="text/javascript" src="src/settings.js"></script>
+    <script type="text/javascript" src="src/functions.js"></script>
     <script type="text/javascript" src="src/index.js"></script>
-    <div id="undo" class="button">
-      Undo
-    </div>
-    <div id="redo" class="button">
-      Redo
-    </div>
+
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div id="undo" class="btn btn-primary">
+          Undo
+        </div>
+        <div id="redo" class="btn btn-primary">
+          Redo
+        </div>
+      </li>
+      <li class="list-group-item">
+        <select id="shapeselect" class="selectlist dropdown-header">
+          <option value="Rectangle">Rectangle</option>
+          <option value="Pen">Pen</option>
+          <option value="Circle">Circle</option>
+          <option value="Line">Line</option>
+          <option value="Text">Text</option>
+        </select>
+      </li>
+      <li class="list-group-item">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Text</span>
+          <input type="text" class="form-control" placeholder="Insert text here" aria-describedby="basic-addon1" id="textWrite">
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Line Thickness</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="1" id="lineThickness">
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Font size</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="30" id="fontSize">
+        </div>
+      </li>
+      <li class="list-group-item">
+        <select id="colorselect" class="colorlist dropdown-header">
+          <option class="BlackText" value="black">Black</option>
+          <option class="RedText" value="red">Red</option>
+          <option class="YellowText" value="yellow">Yellow</option>
+          <option class="BlueText" value="blue">Blue</option>
+          <option class="GreenText" value="green">Green</option>
+          <option class="OrangeText" value="orange">Orange</option>
+          <option class="PurpleText" value="purple">Purple</option>
+          <option class="WhiteText" value="white">White</option>
+        </select>
+      </li>
+    </ul>
+
+
+
     <p></p>
 
-    <select id="shapeselect" class="selectlist">
-      <option value="Rectangle">Rectangle</option>
-      <option value="Pen">Pen</option>
-      <option value="Circle">Circle</option>
-      <option value="Line">Line</option>
-      <option value="Text">Text</option>
 
-    </select>
-    <input type="text" placeholder="Insert text here" id="textWrite">
 
-    <select id="colorselect" class="colorlist">
-      <option class="BlackText" value="black">Black</option>
-      <option class="RedText" value="red">Red</option>
-      <option class="YellowText" value="yellow">Yellow</option>
-      <option class="BlueText" value="blue">Blue</option>
-      <option class="GreenText" value="green">Green</option>
-      <option class="OrangeText" value="orange">Orange</option>
-      <option class="PurpleText" value="purple">Purple</option>
-      <option class="WhiteText" value="white">White</option>
-    </select>
+
+
+
+
 
   </body>
 </html>

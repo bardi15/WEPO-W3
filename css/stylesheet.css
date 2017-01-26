@@ -5,19 +5,6 @@
   border-color: purple;
 }
 
-#undo, #redo {
-/*  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  */
-}
 
 .button {
   background-color: #5CAF50;
@@ -31,6 +18,16 @@
   margin: 4px 2px;
   cursor: pointer;
 }
+.canvas {
+  background-color: #ff9e2c;
+  float: left;
+}
+
+.list-group {
+  background-color: #b6701e;
+  float: left;
+  width: 20%;
+}
 
 .button.greyout {
   background-color: #8c8c8c;
@@ -42,6 +39,7 @@ input:focus::-webkit-input-placeholder
 {
     color: transparent;
 }
+
 
 .BlackText{ background-color:black; color:white;  }
 .RedText{ background-color:red; }
