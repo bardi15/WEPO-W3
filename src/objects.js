@@ -31,9 +31,9 @@ class Rectangle extends Shape {
     //console.log("rect color: " + this.color);
     context.fillStyle = this.color;
     context.fillRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
-    console.log(this);
+  //  console.log(this);
     if (this.selected) {
-      console.log("box selected...");
+    //  console.log("box selected...");
       context.strokeStyle = "grey";
       context.lineWidth   = 5;
       context.setLineDash([10, 15]);
@@ -119,10 +119,53 @@ class Text extends Shape {
 class Pen extends Shape {
   constructor(x, y, color) {
     super(x,y,color);
+    this.moveL = [];
+    this.x1 = Number.MAX_VALUE;
+    this.y1 = Number.MAX_VALUE;
+    this.x2 = 0;
+    this.y2 = 0;
   }
 
   draw(context) {
-    context.lineTo(this.endX, this.endY);
-    context.stroke();
+
+    this.moveL.push({x: this.endX, y: this.endY});
+    //console.log(this.moveL.length);
+
+    context.beginPath();
+    this.moveL.forEach(function(obj){
+      //console.log(obj);
+      context.lineTo(obj.x, obj.y);
+      context.stroke();
+      //counter++;
+      //console.log("NUMBER: " + counter + "=====");
+    });
+
+  /*  for (var i = 0; i < this.moveL.length; i++) {
+      if (this.moveL[i].x < this.x1) {
+        //console.log("this.moveL.x < this.x1");
+        this.x1 = this.moveL[i].x;
+      }
+      if (this.moveL[i].y < this.y1) {
+        //console.log("this.moveL.y < this.y1");
+        this.y1 = this.moveL[i].y;
+      }
+      if (this.moveL[i].x > this.x2) {
+        //console.log("this.moveL.x > this.x2");
+        this.x2 = this.moveL[i].x;
+      }
+      if (this.moveL[i].y > this.y2) {
+        //console.log("this.moveL.y > this.y2");
+        this.y2 = this.moveL[i].y;
+      }
+    }*/
+
+    //console.log("minmax: " , this.x1, this.y1, this.x2, this.y2);
+
+    context.closePath();
+/*    this.x = this.x1;
+    this.y = this.y1;
+    this.endX = this.x2;
+    this.endY = this.x2;*/
   }
+
 }

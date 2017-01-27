@@ -15,9 +15,11 @@ function drawAll() {
   clear();
   var context = settings.canvasObj.getContext("2d");
   //draws all objects that have previously been created
+  var counter = 0;
   settings.shapes.forEach(function(obj){
     obj.draw(context);
-    //console.log(obj);
+    counter++;
+    //console.log("NUMBER: " + counter + "=====");
   });
 
 }
@@ -45,18 +47,24 @@ function selectObject(cursorX,cursorY) {
     var y1 = obj.y;
     var x2 = obj.endX;
     var y2 = obj.endY;
+    console.log(obj);
+  //  dummyDraw(x1,y1,x2,y2);
     //checks if current mouse coordinates are within bounds of object
     if ((x1 <= cursorX && x2 >= cursorX) &&
       ((y1 <= cursorY && y2 >= cursorY))) {
         //obj.selected = false;
+        console.log("TRUE");
         returnValue = obj;
       }
     else {
+
       //obj.selected = false;
     }
-
   });
   //returns object that is under mouse
+  if (returnValue == undefined) {
+    console.log("FALSE");
+  }
   return returnValue;
 }
 
