@@ -16,6 +16,7 @@ var settings = {
   selected: false,
   //if object is being moved
   movingObject: false,
-  fontSize: 30,
-  lineWidth: 1
+  //fontSize: 10,
+  //lineWidth: 1
+  size: 5
 };

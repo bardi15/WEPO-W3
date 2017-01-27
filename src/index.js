@@ -4,8 +4,17 @@ $( document ).ready(function() {
   var xStart = 0;
   var yStart = 0;
 
+  var m = $(".size-track").slider({
+      value: settings.size,
+      min: 0,
+      max: 100
+  });
+
+
   $( "#drawboard" ).mousedown(function(e) {
-    //unSelectAll();
+    var kk = m.slider("getValue");
+    console.log(kk);
+
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
     //return object if it is under the mouse
@@ -14,10 +23,10 @@ $( document ).ready(function() {
     //if object is under the mouse, it is selected, instead of
     //trying to make a new object in that space
     if (selectObj != undefined) {
-      console.log("object is here...");
+    //  console.log("object is here...");
       settings.selected = true;
       settings.currentShape = selectObj;
-      console.log(settings.currentShape.color);
+  //    console.log(settings.currentShape.color);
       $( "#colorselect" ).val(settings.currentShape.color);
     }
     //no object under mouse, new one is to be created.
@@ -96,38 +105,41 @@ $( document ).ready(function() {
 
   function colorVals() {
     var value = $( "#colorselect" ).val();
-    console.log(settings);
+    //console.log(settings);
     settings.nextColor = value;
     //settings.currentShape.color = value;
     if(settings.selected == true) {
-      console.log("changes to color.....");
+    //  console.log("changes to color.....");
       //settings.currentShape.color = value;
       drawCurrent();
     }
-    console.log("touch");
+  //  console.log("touch");
   }
 
   $("#colorselect").change(colorVals);
 
   $( "#undo" ).click(function() {
     if (settings.shapes.length > 0) {
-      $("#redo").removeClass("greyout")
       settings.redoShapes.push(settings.shapes.pop());
       drawAll();
-    }
-    else {
-      $("#undo").addClass("greyout")
     }
   });
   $( "#redo" ).click(function() {
     if (settings.redoShapes.length > 0) {
-      $("#undo").removeClass("greyout")
       settings.shapes.push(settings.redoShapes.pop());
       drawAll();
     }
-    else {
-      $("#redo").addClass("greyout")
+  });
+
+  $( "#clear" ).click(function() {
+    while(settings.redoShapes.length > 0) {
+      settings.redoShapes.pop();
     }
+    while(settings.shapes.length > 0) {
+      settings.shapes.pop();
+    }
+
+    drawAll();
   });
 
   function textVals() {
@@ -136,22 +148,23 @@ $( document ).ready(function() {
   }
 
   $("#textWrite").change(textVals);
-  textVals();
+  //textVals();
 
-  function fontVals() {
+/*  function fontVals() {
     var value = $( "#fontSize" ).val();
-    settings.fontSize = value;
+    settings.size = value;
   }
 
   $("#fontSize").change(fontVals);
-  fontVals();
+  fontVals();*/
 
   function thicknessVals() {
-    var value = $( "#lineThickness" ).val();
-    settings.lineWidth = value;
+    var value = $( ".size-track" ).val();
+    settings.size = value;
+    console.log("hi " + value);
   }
 
-  $("#lineThickness").change(thicknessVals);
-  thicknessVals();  
+  $(".size-track").change(thicknessVals);
+  //thicknessVals();
 
 });

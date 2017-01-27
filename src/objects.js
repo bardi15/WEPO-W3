@@ -35,7 +35,7 @@ class Rectangle extends Shape {
     if (this.selected) {
     //  console.log("box selected...");
       context.strokeStyle = "grey";
-      context.lineWidth   = 5;
+      //context.lineWidth   = 5;
       context.setLineDash([10, 15]);
       context.strokeRect(this.x, this.y, this.endX - this.x, this.endY - this.y);
     }
@@ -45,7 +45,6 @@ class Rectangle extends Shape {
 class Circle extends Shape {
   constructor(x, y, color) {
     super(x,y,color);
-
   }
 
 //calculates location for cirlce, needs to be different from other obj
@@ -63,6 +62,8 @@ class Circle extends Shape {
     context.arc(this.x, this.y, xEnd, yEnd, 0, 2* Math.PI);
     context.fillStyle = this.color;
     context.fill();
+    context.lineWidth = 0;
+    context.strokeStyle = this.color;
     context.stroke();
     if (this.selected) {
       console.log("circle selected...");
@@ -81,13 +82,17 @@ class Circle extends Shape {
 class Line extends Shape {
   constructor(x, y, color) {
     super(x,y,color);
+    this.thickness = settings.size;
   }
 
   draw(context) {
     context.beginPath();
+
     context.moveTo(this.x, this.y);
     context.lineTo(this.endX,this.endY);
     context.strokeStyle = this.color;
+    context.lineWidth = this.thickness;
+    console.log("this.thickness: " + this.thickness);
     context.stroke();
   }
 }
@@ -97,7 +102,7 @@ class Text extends Shape {
     super(x,y,color);
 
     this.currentText = settings.currentText;
-    this.fontSize = settings.fontSize;
+    this.fontSize = settings.size;
   }
 
   draw(context) {
@@ -120,10 +125,11 @@ class Pen extends Shape {
   constructor(x, y, color) {
     super(x,y,color);
     this.moveL = [];
-    this.x1 = Number.MAX_VALUE;
-    this.y1 = Number.MAX_VALUE;
-    this.x2 = 0;
-    this.y2 = 0;
+    //this.x1 = Number.MAX_VALUE;
+    //this.y1 = Number.MAX_VALUE;
+    //this.x2 = 0;
+    //this.y2 = 0;
+    this.thickness = settings.size;
   }
 
   draw(context) {
@@ -132,14 +138,23 @@ class Pen extends Shape {
     //console.log(this.moveL.length);
 
     context.beginPath();
+
+    for (var i = 0; i < this.moveL.length; i++) {
+      context.lineTo(this.moveL[i].x, this.moveL[i].y);
+      context.strokeStyle = this.color;
+      context.lineWidth = this.thickness;
+      context.stroke();
+    }
+    /*
     this.moveL.forEach(function(obj){
       //console.log(obj);
       context.lineTo(obj.x, obj.y);
+      context.lineWidth = context.thickness;
       context.stroke();
       //counter++;
       //console.log("NUMBER: " + counter + "=====");
     });
-
+*/
   /*  for (var i = 0; i < this.moveL.length; i++) {
       if (this.moveL[i].x < this.x1) {
         //console.log("this.moveL.x < this.x1");
