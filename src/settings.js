@@ -18,5 +18,6 @@ var settings = {
   movingObject: false,
   //fontSize: 10,
   //lineWidth: 1
-  size: 5
+  size: 5,
+  saved: []
 };

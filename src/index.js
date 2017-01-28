@@ -4,6 +4,7 @@ $( document ).ready(function() {
   var xStart = 0;
   var yStart = 0;
 
+
   var m = $(".size-track").slider({
       value: settings.size,
       min: 0,
@@ -132,12 +133,7 @@ $( document ).ready(function() {
   });
 
   $( "#clear" ).click(function() {
-    while(settings.redoShapes.length > 0) {
-      settings.redoShapes.pop();
-    }
-    while(settings.shapes.length > 0) {
-      settings.shapes.pop();
-    }
+    clearDrawArrays();
 
     drawAll();
   });
@@ -165,6 +161,14 @@ $( document ).ready(function() {
   }
 
   $(".size-track").change(thicknessVals);
-  //thicknessVals();
+
+
+  $( "#save" ).click(function() {
+      save(settings.shapes,"hi");
+    });
+
+  $( "#load" ).click(function() {
+      loadSaved();
+    });
 
 });

@@ -7,7 +7,7 @@ class Shape {
     this.endX = x;
     this.endY = y;
     this.color = settings.nextColor;
-
+    this.name = this.constructor.name;
     //this.selected=false;
     //text for text objects
   //  this.currentText="";
