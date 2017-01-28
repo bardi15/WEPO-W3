@@ -5,7 +5,8 @@ $( document ).ready(function() {
   var yStart = 0;
 
 
-  var m = $(".size-track").slider({
+  //slider for size
+  $(".size-track").slider({
       value: settings.size,
       min: 0,
       max: 100
@@ -13,9 +14,6 @@ $( document ).ready(function() {
 
 
   $( "#drawboard" ).mousedown(function(e) {
-    var kk = m.slider("getValue");
-    console.log(kk);
-
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
     //return object if it is under the mouse
@@ -24,20 +22,15 @@ $( document ).ready(function() {
     //if object is under the mouse, it is selected, instead of
     //trying to make a new object in that space
     if (selectObj != undefined) {
-    //  console.log("object is here...");
       settings.selected = true;
       settings.currentShape = selectObj;
-  //    console.log(settings.currentShape.color);
       $( "#colorselect" ).val(settings.currentShape.color);
     }
     //no object under mouse, new one is to be created.
     else {
       settings.isDrawing = true;
-      //settings.selected = false;
       var shape = undefined;
-      //var context = settings.canvasObj.getContext("2d");
 
-      //context.moveTo(x,y);
       if (settings.nextObject === "Rectangle") {
         shape = new Rectangle(x,y,settings.nextColor);
       }
@@ -51,10 +44,8 @@ $( document ).ready(function() {
       //by one mousedown, and it not resized by mouse movements
       else if (settings.nextObject === "Text") {
         shape = new Text(x,y,settings.nextColor);
-        //settings.shapes.push(shape);
       }
       else if (settings.nextObject === "Pen") {
-        //console.log("in nxt: ", x,y);
         shape = new Pen(x,y,settings.nextColor);
       }
 
@@ -78,13 +69,10 @@ $( document ).ready(function() {
 
   });
   $( "#drawboard" ).mousemove(function(e) {
-    //console.log(settings.nextColor);
     var currShape = settings.currentShape;
     var x = event.pageX - this.offsetLeft;
     var y = event.pageY - this.offsetTop;
-    //if(currShape != undefined && currShape.selected){
     if (currShape != undefined && settings.selected){
-      //console.log("moving object..");
       moveObject(currShape,x,y);
       drawCurrent();
     }
@@ -106,15 +94,10 @@ $( document ).ready(function() {
 
   function colorVals() {
     var value = $( "#colorselect" ).val();
-    //console.log(settings);
     settings.nextColor = value;
-    //settings.currentShape.color = value;
     if(settings.selected == true) {
-    //  console.log("changes to color.....");
-      //settings.currentShape.color = value;
       drawCurrent();
     }
-  //  console.log("touch");
   }
 
   $("#colorselect").change(colorVals);
@@ -134,7 +117,6 @@ $( document ).ready(function() {
 
   $( "#clear" ).click(function() {
     clearDrawArrays();
-
     drawAll();
   });
 
@@ -144,15 +126,6 @@ $( document ).ready(function() {
   }
 
   $("#textWrite").change(textVals);
-  //textVals();
-
-/*  function fontVals() {
-    var value = $( "#fontSize" ).val();
-    settings.size = value;
-  }
-
-  $("#fontSize").change(fontVals);
-  fontVals();*/
 
   function thicknessVals() {
     var value = $( ".size-track" ).val();
@@ -161,7 +134,6 @@ $( document ).ready(function() {
   }
 
   $(".size-track").change(thicknessVals);
-
 
   $( "#save" ).click(function() {
       save(settings.shapes,"hi");

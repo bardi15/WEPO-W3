@@ -15,11 +15,8 @@ function drawAll() {
   clear();
   var context = settings.canvasObj.getContext("2d");
   //draws all objects that have previously been created
-  var counter = 0;
   settings.shapes.forEach(function(obj){
     obj.draw(context);
-    counter++;
-    //console.log("NUMBER: " + counter + "=====");
   });
 
 }
@@ -56,30 +53,14 @@ function selectObject(cursorX,cursorY) {
         console.log("TRUE");
         returnValue = obj;
       }
-    else {
-
-      //obj.selected = false;
-    }
   });
   //returns object that is under mouse
-  if (returnValue == undefined) {
-    console.log("FALSE");
-  }
   return returnValue;
 }
-
-//
-/*function unSelectAll() {
-  settings.shapes.forEach(function(obj){
-    //obj.selected = false;
-  });
-}*/
 
 //changes coordinates of shape that is sent by reference
 function moveObject(currShape,x,y) {
   //console.log("moving in objects");
-  save(settings,"hi");
-  loadSaved();
   var currWidth = currShape.endX - currShape.x;
   var currHeight = currShape.endY - currShape.y;
   currShape.x = x;
