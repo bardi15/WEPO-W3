@@ -31,7 +31,7 @@ function dummyDraw(x,y,x1,y1) {
 //clears canvas
 function clear() {
   var context = settings.canvasObj.getContext("2d");
-  context.clearRect(0,0,800,600);
+  context.clearRect(0,0,840,640);
 }
 
 //if mousedown event, this function will check if an object is "below"
