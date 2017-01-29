@@ -4,7 +4,6 @@ $( document ).ready(function() {
   var xStart = 0;
   var yStart = 0;
 
-
   //slider for size
   $(".size-track").slider({
       value: settings.size,
