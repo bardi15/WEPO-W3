@@ -60,7 +60,6 @@ $( document ).ready(function() {
     //items are only pushed to the shapes list if it is not selected
     //for movement.
     if (settings.isDrawing && !settings.selected) {
-      //console.log("pushed");
       settings.shapes.push(settings.currentShape);
     }
     settings.isDrawing = false;
@@ -88,24 +87,32 @@ $( document ).ready(function() {
     var value = $( "#shapeselect" ).val();
     settings.nextObject = value;
   }
-
   $("#shapeselect").change(displayVals);
   displayVals();
 
   function colorVals() {
     var value = $( "#colorselect" ).val();
-    //console.log(settings);
     settings.nextColor = value;
-    //settings.currentShape.color = value;
     if(settings.selected == true) {
-    //  console.log("changes to color.....");
-      //settings.currentShape.color = value;
       drawCurrent();
     }
-  //  console.log("touch");
+  }
+  $("#colorselect").change(colorVals);
+
+
+
+  function textVals() {
+    var value = $( "#textWrite" ).val();
+    settings.currentText = value;
+  }
+  $("#textWrite").change(textVals);
+
+  function thicknessVals() {
+    var value = $( ".size-track" ).val();
+    settings.size = value;
   }
 
-  $("#colorselect").change(colorVals);
+  $(".size-track").change(thicknessVals);
 
   $( "#undo" ).click(function() {
     if (settings.shapes.length > 0) {
@@ -113,6 +120,7 @@ $( document ).ready(function() {
       drawAll();
     }
   });
+
   $( "#redo" ).click(function() {
     if (settings.redoShapes.length > 0) {
       settings.shapes.push(settings.redoShapes.pop());
@@ -126,37 +134,12 @@ $( document ).ready(function() {
     drawAll();
   });
 
-  function textVals() {
-    var value = $( "#textWrite" ).val();
-    settings.currentText = value;
-  }
-
-  $("#textWrite").change(textVals);
-  //textVals();
-
-/*  function fontVals() {
-    var value = $( "#fontSize" ).val();
-    settings.size = value;
-  }
-
-  $("#fontSize").change(fontVals);
-  fontVals();*/
-
-  function thicknessVals() {
-    var value = $( ".size-track" ).val();
-    settings.size = value;
-    console.log("hi " + value);
-  }
-
-  $(".size-track").change(thicknessVals);
-
-
   $( "#save" ).click(function() {
       save(settings.shapes,"hi");
-    });
+  });
 
   $( "#load" ).click(function() {
       loadSaved();
-    });
+  });
 
 });

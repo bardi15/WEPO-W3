@@ -69,7 +69,6 @@ class Line extends Shape {
     context.lineTo(this.endX,this.endY);
     context.strokeStyle = this.color;
     context.lineWidth = this.thickness;
-    console.log("this.thickness: " + this.thickness);
     context.stroke();
   }
 }
