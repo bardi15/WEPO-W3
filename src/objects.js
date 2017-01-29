@@ -6,7 +6,7 @@ class Shape {
     //Where mouse ends
     this.endX = x;
     this.endY = y;
-    this.color = settings.nextColor;
+    this.color = color || settings.nextColor;
     this.name = this.constructor.name;
   }
   //sets end coordinates
@@ -33,6 +33,7 @@ class Rectangle extends Shape {
 class Circle extends Shape {
   constructor(x, y, color) {
     super(x,y,color);
+    this.thickness = 0;
   }
 
 //calculates location for cirlce, needs to be different from other obj

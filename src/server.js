@@ -6,20 +6,20 @@ var drawing = {
 
 
 
-function save(shapes, name) {
+function save(shapes) {
   var url = "http://localhost:3000/api/drawings";
   for (i = 0; i < shapes.length; i++) {
-    console.log("i: " + shapes[i]);
+    console.log("i: " , shapes[i]);
   }
 
   var sm = JSON.stringify(shapes);
 
   var dm = {
-      title: name,
+      title: " ",
       content: shapes
   };
 
- console.log("dm:" + JSON.stringify(dm));
+ //console.log("dm:" + JSON.stringify(dm));
 
   $.ajax({
       type: "POST",
@@ -39,49 +39,71 @@ function save(shapes, name) {
 
 }
 
-function getitemCount() {
-  var uGet = "http://localhost:3000/api/drawings/";
-  var x = $.getJSON(uGet, function (data) {
-    console.log("gic: " + data.length);
-    return data.length;
-  });
-  return x;
-}
-
 function loadSaved () {
   var latest = 0;
   var uGet = "http://localhost:3000/api/drawings/";
-  clearSaves();
-  var count = getitemCount();
+
   $.getJSON(uGet, function (data) {
-    for (i = 0; i < data.length; i++) {
-      createRectangleObj(data[i]);
-      console.log("hi");
-      //console.log(JSON.stringify(data[i].title));
-      //createRectangleObj(data[i]);
-    }
-    console.log("ciount: " + count);
+    var newest = data.length - 1;
+    $.getJSON(uGet + newest, function (data) {
+      createObj(data);
+
+    });
   });
-
-  console.log("CCCciount: " + count);
 }
 
-function clearSaves() {
-  while (settings.saved.length > 0) {
-    settings.saved.pop();
-  }
-}
+function createObj(jsonData) {
+  clearDrawArrays();
+  var content = jsonData["content"];
+  console.log(content);
+  content.forEach(function(element) {
+    console.log("crobj:" , element);
+    if (element.name === "Rectangle") {
+      var m = new Rectangle(element.x, element.y, element.color);
+      m.endX = element.endX;
+      m.endY = element.endY;
+      console.log(m);
+      settings.shapes.push(m);
+    }
+    else if (element.name === "Line") {
+      var m = new Line(element.x, element.y, element.color);
+      m.endX = element.endX;
+      m.endY = element.endY;
+      m.thickness = element.thickness;
 
-function createRectangleObj(jsonData) {
-  var parsedData = JSON.parse(JSON.stringify(jsonData));
-  //console.log("parsedData1" + parsedData.id);
-  //console.log("parsedData2" + parsedData.title);
-  var main = JSON.parse(JSON.stringify(parsedData.title));
-  console.log(jsonData);
-  //console.log("parsedData3" + parsedData.content);
-  var x = jsonData["title"];
-  //console.log("createRectangleObj: "+ JSON.stringify(x));
-  //console.log("createRectabj: "+ x.length);
+      console.log(m);
+      settings.shapes.push(m);
+    }
+    else if (element.name === "Text") {
+      var m = new Text(element.x, element.y, element.color);
+      m.endX = element.endX;
+      m.endY = element.endY;
+      m.font = element.font;
+      m.currentText = element.currentText;
+      m.fontSize = element.fontSize;
 
-  //var shape = new Rectangle()
+      console.log(m);
+      settings.shapes.push(m);
+    }
+    else if (element.name === "Circle") {
+      var m = new Circle(element.x, element.y, element.color);
+      m.endX = element.endX;
+      m.endY = element.endY;
+
+      console.log(m);
+      settings.shapes.push(m);
+    }
+    else if (element.name === "Pen") {
+      var m = new Pen(element.x, element.y, element.color);
+      m.moveL = element.moveL;
+      m.thickness = element.thickness;
+      m.endX = element.endX;
+      m.endY = element.endY;
+      console.log(m);
+      settings.shapes.push(m);
+    }
+    drawAll();
+  });
+  //console.log(jsonData["content"]);
+
 }

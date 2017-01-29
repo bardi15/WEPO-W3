@@ -94,10 +94,15 @@ $( document ).ready(function() {
 
   function colorVals() {
     var value = $( "#colorselect" ).val();
+    //console.log(settings);
     settings.nextColor = value;
+    //settings.currentShape.color = value;
     if(settings.selected == true) {
+    //  console.log("changes to color.....");
+      //settings.currentShape.color = value;
       drawCurrent();
     }
+  //  console.log("touch");
   }
 
   $("#colorselect").change(colorVals);
@@ -117,6 +122,7 @@ $( document ).ready(function() {
 
   $( "#clear" ).click(function() {
     clearDrawArrays();
+
     drawAll();
   });
 
@@ -126,6 +132,15 @@ $( document ).ready(function() {
   }
 
   $("#textWrite").change(textVals);
+  //textVals();
+
+/*  function fontVals() {
+    var value = $( "#fontSize" ).val();
+    settings.size = value;
+  }
+
+  $("#fontSize").change(fontVals);
+  fontVals();*/
 
   function thicknessVals() {
     var value = $( ".size-track" ).val();
@@ -134,6 +149,7 @@ $( document ).ready(function() {
   }
 
   $(".size-track").change(thicknessVals);
+
 
   $( "#save" ).click(function() {
       save(settings.shapes,"hi");

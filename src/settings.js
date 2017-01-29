@@ -19,5 +19,4 @@ var settings = {
   //fontSize: 10,
   //lineWidth: 1
   size: 5,
-  saved: []
 };
